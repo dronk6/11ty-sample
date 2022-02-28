@@ -1,0 +1,60 @@
+<p><a href="../index.html">Home</a></p>
+<h1>Getting Started with Docker: Docker Playground</h1>
+<h4>24 February 2022</h4>
+<hr>
+<p>In a previous article, I stumbled my way through a tutorial on <a href="https://dev.to/dronk6/getting-started-with-docker-windows-11-3ihn">how to install Docker for Windows 11</a>; however, I made it pretty clear I had <em>no idea</em> how to use Docker (let alone what it was) at the time. So, I'm going to use this post to learn more by starting the tutorial on Docker's website: <a href="https://www.docker.com/101-tutorial">Docker Playground</a>, which is their free way to learn the system. I'm also going to talk a little about Docker itself, and discuss how to create a Dockerfile using <a href="https://www.docker.com/101-tutorial">this microservice</a> as a backdrop. Let's get to it!</p>
+<h2>Why is Docker so Powerful?</h2>
+<p>I talk a little about this in that post I linked above, but Docker is <em>incredibly</em> powerful. This is because container-based architecture allows for the creation of instances of an application, allowing a developer to customize and replicate these instances as much as they want without interfering with anything else on a user's system.</p>
+<p>Docker takes this to another level, as it allows developers to toss everything needed to run an app into one easily-distributed package, then ship it to any system that can support the application. This makes the application easier to manage--because they're not relying on users to have (most) of the necessary dependencies--and infinitely scalable. Which is a huge deal, because it allows users to have a faster, lighter experience with an application that is still tied into the same backend.</p>
+<p>With that in mind, let's try it out.</p>
+<h2>Docker Playground</h2>
+<p><a href="https://www.docker.com/101-tutorial">Docker Playground</a> is Docker's free, online tutorial for learning Docker. Once you get through the initial steps, they provide a verbose guide that can get you going with a container. So, I'll go through the first couple of steps to get going then I'll leave the rest to you!</p>
+<h3>Step 1: Access Play With Docker and Sign In</h3>
+<p>First, we'll navigate to the <a href="https://labs.play-with-docker.com/">Play with Docker</a> starting page, which should look like this:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3d7zld6ibh1fhc4dpsg7.png" alt="Play with Docker Start Page"></p>
+<p>Click Start, and you'll be prompted to sign in with a GitHub or Docker account. Feel free to do whichever is easier for you, but do not purchase anything if you decide to create a Docker account--the tutorial and Docker Playground are free.</p>
+<h3>Step 2: Create a New Instance</h3>
+<p>Once you are signed in, click the &quot;Add New Instance&quot; button to create a virtualized container in Docker Playground. If you did so successfully, your page will look something like this:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ffbt819cfbb429eehuyk.png" alt="Instance Created Page"></p>
+<h3>Step 3: Access the Docker 101 Tutorial</h3>
+<p>To access the Docker 101 Tutorial, you actually have to use the instance you've just created. So, type the following command in the Command Line Interface on Docker Playground and hit Enter:</p>
+<p><code>docker run -dp 80:80 docker/getting-started:pwd</code></p>
+<p>After this command processes, you'll see that a hyperlinked &quot;<strong>80</strong>&quot; has appeared next to the &quot;Open Port&quot; button at the top of the screen, like so:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4fs6ze036aoqrqq5l6sq.png" alt="Port 80 Hyperlink Image"></p>
+<p><strong><em>Click this link, and you'll be taken to the Docker 101 tutorial. From there, you can navigate through the tutorial and learn more about Docker via the Docker Playground!</em></strong></p>
+<h2>Creating a Dockerfile</h2>
+<p>A Dockerfile is a set of instructions, called a <a href="https://searchitoperations.techtarget.com/definition/Docker-image">Docker image</a>, which Docker uses to build your application within a container. As these instructions essentially define how the Docker container will handle the process of running your application, it is important that this file exists in your container prior to you attempting to run your application. Below, we'll look at an example of a Dockerfile that was created for a <a href="https://github.com/heyMP/ist402-docker/tree/master/labs/7-news-api-microservice">NewsAPI Microservice</a>, then show what having this Dockerfile properly configured can do for you.</p>
+<blockquote>
+<h4>How are Dockerfiles created?</h4>
+</blockquote>
+<p><em>When you're configuring a container, typically you'll be creating a custom Dockerfile. To do so, you just create a text file titled &quot;Dockerfile&quot; in your container's directory, then insert the commands necessary for your container.</em></p>
+<h3>What's in a Dockerfile?</h3>
+<p>This can depend on what the Dockerfile is being used for, but in this case we actually have two: one for the visual web component, and another for the server that accesses an API. To avoid confusion, we'll just focus on the server. Below is what we have in that file:</p>
+<pre><code>FROM node:12
+
+WORKDIR /home/node/app
+
+COPY package.json ./
+RUN yarn install
+
+COPY . .
+
+CMD [ &quot;yarn&quot;, &quot;start&quot; ]
+</code></pre>
+<p>The capitalized words in this file represent commands, which Docker uses to create an environment conducive for your application to run--regardless of the system it's on. Let's look at each of these commands:</p>
+<h4>FROM</h4>
+<p>The first thing we see here is the &quot;FROM&quot; instruction. This is always the first command in a Dockerfile, as it indicates that this Dockerfile is the base image is for the container.</p>
+<h4>WORKDIR</h4>
+<p>This instruction key establishes the working directory where subsequent commands will be run.</p>
+<h4>COPY</h4>
+<p>The first time this command is shown, it's copying our application's package.json file into the working directory. The way we can see this is the <code>./</code> that follows <code>package.json</code> in the command, which signifies that this is the destination for our copy. In this case, copying this will allow us to then use that package.json to install the app's necessary dependencies using:</p>
+<h4>RUN</h4>
+<p>RUN can be used in a variety of ways, but in this example it's being used to run a <code>yarn install</code> command--which installs all the dependencies needed to allow our application to run in the Docker container.</p>
+<h4>COPY (again)</h4>
+<p>We already talked a little about COPY, but this time the thing that's being copied is a shorthand, <code>.  .</code>, which indicates that everything (<code>.</code>) is being copied to the working directory, allowing the container to be configured to work with the application.</p>
+<h4>CMD</h4>
+<p>And finally, we have CMD. The CMD command takes in an array of parameterized commands, which will then be run when the Dockerfile is used to build your application. So, this CMD's array equates to <code>yarn start</code>, which is a command that uses <a href="https://yarnpkg.com/">yarn</a> to start the application. As this is the final command in the Dockerfile, at this point our application is built within the container!</p>
+<p><strong><em>If you'd like to learn more about Dockerfile commands, <a href="https://takacsmark.com/dockerfile-tutorial-by-example-dockerfile-best-practices-2018/#dockerfile-key-instructions-best-practices">this article</a> breaks each down with great examples.</em></strong></p>
+<h3>What's Next?</h3>
+<p>At this point, you can run the application since you've successfully built it using the Dockerfile. In the case of <a href="https://github.com/heyMP/ist402-docker/tree/master/labs/7-news-api-microservice">our example</a>, this would involve running the <code>docker-compose up</code> command. Which allows you to view our example application's front-end, which lists hyperlinked articles from NewsAPI:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/avhsunt5pbax3pxu0t97.png" alt="NewsApp Results"></p>
