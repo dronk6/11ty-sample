@@ -1,0 +1,42 @@
+<p><a href="../index.html">Home</a></p>
+<h1>Getting Started with Docker: Windows 11</h1>
+<h4>16 January 2022</h4>
+<p>Before writing this article, I had never worked with Docker before. In fact, I didn't even know what it was. However, through a lot of Googling and trial-and-error, I found enough information to go from crawling to slowly walking. Let's get you there too.</p>
+<p>In this demo, I'll be covering what Docker is, how to download it on Windows 11 OS, and getting Docker Desktop up and running with an example GitHub repo.</p>
+<h2>What is Docker?</h2>
+<p>Docker is a platform-as-a-service (PAAS) software that allows users to put their entire application into a virtual &quot;container.&quot; This means that, rather than using your desktop to host an application, you can isolate your entire app within a single container--allowing you to manage multiple applications at once and utilize multiple versions of required software for your applications. All of this means you can manipulate your applications with more power and flexibility than was previously possible.</p>
+<p><em>For more information about containers and Docker's logic, go to <a href="https://www.docker.com/resources/what-container">this guide</a>.</em></p>
+<h2>Downloading Docker for Windows 11</h2>
+<p><em>Before we get into the steps, you need to make sure your machine is running <strong>Windows 11</strong> and is <strong>at least 64-bits</strong>. You can do this by navigating to the Windows Settings application and going to System &gt; About. In this menu, you'll find your System Type and Windows Edition.</em></p>
+<h3>Step 1: Download and Install Docker Desktop</h3>
+<p>Click <a href="https://www.docker.com/products/docker-desktop">this link</a> and click the &quot;Download for Windows&quot; button. Your version should be automatically detected.</p>
+<p>Once you've downloaded the installer, run it. At this point, you'll be taken through the setup wizard. When you finish this, you should be able to open the application.</p>
+<h3>Step 2: Uh oh.</h3>
+<p>Docker has some ancillary tools that you also need to install just to get it up and running, so you'll likely receive an error when you first try to open it. It happened to me, and this is the error message I saw:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/z13u1421kpytg6rszrww.png" alt="Install WSL 2"></p>
+<p><em>Do not worry, the resolution is very simple...</em></p>
+<h3>Step 3: Install WSL 2</h3>
+<p>WSL, or the Windows Subsystem for Linux, helps ensure Docker can compatibly run with your Windows computer. To install it, you can click the link in the error message shown above if it pops up on your screen when you try to open Docker, or you can go to <a href="https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package">this link</a>.</p>
+<p>Go through steps four and five of the instructions in that link, then try closing Docker and opening it again.</p>
+<h3>Step 4: The Tutorial</h3>
+<p>When you re-open Docker, it should open successfully and you'll see a tutorial. I highly recommend going through it, as it's brief but helpful in getting you acclimated to the system.</p>
+<h3>(Optional) Step 5: Sign in/up</h3>
+<p>Since this was my first time using Docker, I had to sign up using the button in Docker Desktop. If you've never used Docker, it's worth creating an account so you can use the platform to its fullest.</p>
+<p><em><strong>At this point, you've successfully installed Docker Desktop! Next, we'll take a look at how to get started with an example demo.</strong></em></p>
+<h2>Example with HAXcms</h2>
+<p>To get started, we'll need a GitHub repo with a fully-fledged application. In my case, I'll be using <a href="https://github.com/elmsln/haxcms">HAXcms</a>: a content management system that encapsulates the incredibly accessible authoring experience of <a href="HAXTheWeb.org">HAX</a>. Let's get going!</p>
+<h3>Step 1: The Dev Environments Tab</h3>
+<p>Navigate to the &quot;Dev Environments&quot; Tab in Docker Desktop, and click the &quot;Create&quot; button. Click the &quot;Get Started&quot; button in the guide that pops up, and the following screen should appear:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/czzwtb4zd5h5kmc0kidw.png" alt="Create a Dev Environment"></p>
+<p><em>As you can see in the image, I've already put a link into the &quot;Enter the Git Repository&quot; box. Below, I'll show you where to get a link to put in this box.</em></p>
+<h3>Step 2: Getting the HTTPS Link From a GitHub Repo</h3>
+<p>Navigate to your GitHub repo of choice, and select the green &quot;Clone&quot; button. A dropdown menu should populate, and you'll want to copy the link that appears in the HTTPS tab. Kind of like this:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4ukhzvyyy3w0dfj52nxd.png" alt="Clone a Repo"></p>
+<p>Paste the link you copied into the &quot;Enter the Git Repository&quot; box, and click the &quot;Continue&quot; button.</p>
+<p>The Dev Environment will take a little time to generate, then you'll see a page indicating that it's all set up.</p>
+<h3>Step 3: Get Going in VSCode</h3>
+<p>At this point, your Dev Environments tab in Docker Desktop should be showing the container you created and your Containers/Apps tab will show that your container is running. Way to go!</p>
+<p>Now, you can start working with your container in VSCode. To do this, click on the container listed in your Dev Environments tab. It should look similar to this:</p>
+<p><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/z6yn4g3wx3gmfitmt4ue.png" alt="Dev Environments with Running Container"></p>
+<p>To open VSCode, just click the button. When you do, you may have to install one or two additional tools--or even VSCode itself if you don't have it already. If this is the case, follow the steps provided and you'll be viewing your container's code in no time!</p>
+<p><strong><em>For more information about Docker and initial steps, feel free to view this <a href="https://medium.com/free-code-camp/docker-simplified-96639a35ff36#06d9">guide</a> from freeCodeCamp. I found it very useful, especially for learning about Docker's basic commands. Good luck!</em></strong></p>
